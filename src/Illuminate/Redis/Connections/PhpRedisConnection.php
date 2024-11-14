@@ -162,6 +162,21 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     }
 
     /**
+     * Returns the specified elements of the list stored at key.
+     *
+     * @param string $key
+     * @param int|string $start
+     * @param int|string $stop
+     * @return array|null
+     */
+    public function lrange($key, $start, $stop)
+    {
+        $result = $this->command('lrange', [$key, $start, $stop]);
+
+        return empty($result) ? null : $result;
+    }
+
+    /**
      * Removes and returns the first element of the list stored at key.
      *
      * @param  mixed  ...$arguments
@@ -311,7 +326,8 @@ class PhpRedisConnection extends Connection implements ConnectionContract
      */
     public function scan($cursor, $options = [])
     {
-        $result = $this->client->scan($cursor,
+        $result = $this->client->scan(
+            $cursor,
             $options['match'] ?? '*',
             $options['count'] ?? 10
         );
@@ -333,7 +349,9 @@ class PhpRedisConnection extends Connection implements ConnectionContract
      */
     public function zscan($key, $cursor, $options = [])
     {
-        $result = $this->client->zscan($key, $cursor,
+        $result = $this->client->zscan(
+            $key,
+            $cursor,
             $options['match'] ?? '*',
             $options['count'] ?? 10
         );
@@ -355,7 +373,9 @@ class PhpRedisConnection extends Connection implements ConnectionContract
      */
     public function hscan($key, $cursor, $options = [])
     {
-        $result = $this->client->hscan($key, $cursor,
+        $result = $this->client->hscan(
+            $key,
+            $cursor,
             $options['match'] ?? '*',
             $options['count'] ?? 10
         );
@@ -377,7 +397,9 @@ class PhpRedisConnection extends Connection implements ConnectionContract
      */
     public function sscan($key, $cursor, $options = [])
     {
-        $result = $this->client->sscan($key, $cursor,
+        $result = $this->client->sscan(
+            $key,
+            $cursor,
             $options['match'] ?? '*',
             $options['count'] ?? 10
         );
